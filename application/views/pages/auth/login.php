@@ -71,9 +71,9 @@
                                             Masuk
                                         </button>
                                     </form>
-                                    <?php if($this->session->flashdata('message_error')): ?>
-                                        <div class="text-danger mt-2">
-                                                <?= $this->session->flashdata('message_error') ?>
+                                    <?php if($this->session->flashdata('message_login_error')): ?>
+                                        <div class="text-danger text-center mt-2">
+                                                <?= $this->session->flashdata('message_login_error') ?>
                                         </div>
                                     <?php endif ?>
                                 </div>

@@ -5,6 +5,25 @@ class Auth_model extends CI_Model
 	private $_table = "users";
 	const SESSION_KEY = 'user_id';
 
+	public function verify_password($user_id, $current_password)
+    {
+        $query = $this->db->get_where('users', array('id' => $user_id));
+        $user = $query->row();
+
+        // Compare the hashed current password with the provided current password
+        return password_verify($current_password, $user->password);
+    }
+
+    public function update_password($user_id, $new_password)
+    {
+        $data = array(
+            'password' => password_hash($new_password, PASSWORD_DEFAULT),
+        );
+        $this->db->where('id', $user_id);
+        $this->db->update('users', $data);
+		return $this->db->affected_rows() > 0;
+    }
+
 	public function login($username, $password)
 	{
 		$this->db->where('username', $username);
