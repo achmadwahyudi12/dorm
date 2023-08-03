@@ -33,6 +33,7 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
+                            <th>Kode Transaksi</th>
                             <th>Kode Booking</th>
                             <th>Total Bayar</th>
                             <th>Keterangan</th>
@@ -44,6 +45,7 @@
                         <?php foreach ($list_payment as $item) : ?>
                             <tr>
                                 <td><?= $item['code'] ?></td>
+                                <td><?= $item['booking_code'] ?></td>
                                 <td><?= format_rupiah($item['amount']) ?></td>
                                 <td><?= $item['description'] ?></td>
                                 <td><?= $item['created_at'] ?></td>

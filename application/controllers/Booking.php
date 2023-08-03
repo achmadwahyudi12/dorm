@@ -77,6 +77,7 @@ class Booking extends CI_Controller
 			if ($current_payment > 0) {
 				$data_payment = array(
 					'id_booking' => $result,
+					'code' => "TRX-" . date('YmdHis'),
 					'amount' => $current_payment,
 					'description' => "pembayaran DP",
 					'created_at' => (new DateTime())->format('Y-m-d H:i:s'),

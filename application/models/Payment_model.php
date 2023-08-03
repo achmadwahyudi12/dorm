@@ -6,7 +6,7 @@ class Payment_model extends CI_Model
 
     public function get_payments()
 	{
-        $this->db->select('bookings.id, bookings.code, payments.*');
+        $this->db->select('bookings.id, bookings.code as booking_code, payments.*');
         $this->db->from('bookings');
         $this->db->join('payments', 'bookings.id = payments.id_booking');
         $query = $this->db->get();
