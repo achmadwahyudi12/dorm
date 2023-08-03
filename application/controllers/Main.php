@@ -6,6 +6,7 @@ class Main extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('auth_model');
+		$this->load->model('main_model');
 	}
 
 	public function index()
@@ -14,8 +15,12 @@ class Main extends CI_Controller {
 			redirect('auth');
 		}
 
+		// get dorm summary room
+		$data['list_summary_room'] = $this->main_model->get_dorms_summary_room();
+
 		$data['profil'] = $this->auth_model->current_user();
 		$this->load->view('template/page_header', $data);
+		$this->load->view('pages/dashboard/index');
 		$this->load->view('template/page_footer');
 	}
 }

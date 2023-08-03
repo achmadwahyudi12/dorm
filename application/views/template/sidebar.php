@@ -42,12 +42,12 @@
 </div>
 <li class="nav-item">
     <a class="nav-link" href="<?= base_url('booking'); ?>">
-        <i class="fas fa-fw fa-home"></i>
+        <i class="fas fa-fw fa-shopping-basket"></i>
         <span>Pemesanan</span></a>
 </li>
 <li class="nav-item">
     <a class="nav-link" href="<?= base_url('payment'); ?>">
-        <i class="fas fa-fw fa-home"></i>
+        <i class="fas fa-fw fa-money-check"></i>
         <span>Pembayaran</span></a>
 </li>
 
