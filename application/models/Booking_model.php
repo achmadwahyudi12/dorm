@@ -15,6 +15,11 @@ class Booking_model extends CI_Model
 		$query = $this->db->get();
 		return $query->result_array();
 	}
+	
+	public function get_booking_by_code($code){
+		$query = $this->db->get_where($this->_table, array('code' => $code));
+		return $query->row();
+	}
 
 	public function get_status_booking($current, $total){
 		$status = "";

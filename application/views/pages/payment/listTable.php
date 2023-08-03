@@ -5,7 +5,7 @@
         <div class="card-header py-3">
             <div class="d-flex justify-content-between align-items-center">
                 <h6 class="m-0 font-weight-bold text-primary">Daftar Pembayaran</h6>
-                <a class="btn btn-primary" href="<?= base_url("booking/form"); ?>">
+                <a class="btn btn-primary" href="<?= base_url("payment/form"); ?>">
                     <i class="fas fa-fw fa-plus"></i>
                     Tambah
                 </a>
