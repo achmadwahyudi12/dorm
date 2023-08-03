@@ -47,5 +47,9 @@ class Booking_model extends CI_Model
 		return $this->db->affected_rows() > 0;
     }
 
-
+	public function update_booking($booking_id, $data) {
+        $this->db->where('id', $booking_id);
+        $this->db->update($this->_table, $data);
+        return $this->db->affected_rows() > 0;
+    }
 }

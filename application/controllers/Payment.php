@@ -58,6 +58,15 @@ class Payment extends CI_Controller
 			$result = $this->payment_model->add_payment($data_payment);
 			if ($result) {
 				// update current payment on data booking
+				$current_payment = $booking->current_payment + $amount;
+				$current_status = $this->booking_model->get_status_booking($current_payment, $booking->total_payment);
+				$data_booking = array(
+					'current_payment' => $current_payment,
+					'status' => $current_status,
+					'updated_at' => (new DateTime())->format('Y-m-d H:i:s'),
+					'updated_by' => $this->session->userdata('user_id'),
+				);
+				$updated = $this->booking_model->update_booking($booking->id,$data_booking);
 
 				$this->session->set_flashdata('payment_message_success', 'Data transaksi berhasil disimpan.');
 				redirect("payment");
