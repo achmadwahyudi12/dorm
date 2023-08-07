@@ -45,7 +45,7 @@ class Payment extends CI_Controller
 
 		if ($booking->id) {
 			$data_payment = array(
-				'id_booking' => $booking_code,
+				'id_booking' => $booking->id,
 				'code' => "TRX-" . date('YmdHis'),
 				'amount' => $amount,
 				'description' => $description,
@@ -67,6 +67,15 @@ class Payment extends CI_Controller
 					'updated_by' => $this->session->userdata('user_id'),
 				);
 				$updated = $this->booking_model->update_booking($booking->id,$data_booking);
+
+				// save payment data per month when the order status is paid
+				if ($current_status == 'paid') {
+					$current_date = $booking->start_date;
+					while ($current_date <= $booking->end_date) {
+						echo $current_date . "\n"; // You can process the date here as needed
+						$current_date = date('Y-m-d', strtotime($current_date . ' +1 day'));
+					}
+				}
 
 				$this->session->set_flashdata('payment_message_success', 'Data transaksi berhasil disimpan.');
 				redirect("payment");
