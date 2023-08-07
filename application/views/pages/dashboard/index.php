@@ -1,5 +1,6 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
+    <?php $this->load->view('pages/dashboard/card_count'); ?>
     <div class="row">
         <div class="col-7">
             <?php $this->load->view('pages/dashboard/summary_room'); ?>

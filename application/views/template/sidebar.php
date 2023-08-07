@@ -37,6 +37,9 @@
         <span>Pelanggan</span></a>
 </li>
 
+<!-- Divider -->
+<hr class="sidebar-divider">
+
 <div class="sidebar-heading">
     Transaksi
 </div>
