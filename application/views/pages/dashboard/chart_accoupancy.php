@@ -28,9 +28,6 @@
         backgroundColors.push(randomColor);
     }
 
-    console.log("labels", labels);
-    console.log("values", values);
-
     // Create the chart
     var ctx = document.getElementById('myChart').getContext('2d');
     var myChart = new Chart(ctx, {
