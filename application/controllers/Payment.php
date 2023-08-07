@@ -79,6 +79,8 @@ class Payment extends CI_Controller
 					foreach ($period as $date) {
 						$data_payment_per_month = array(
 							'id_booking' => $booking->id,
+							'id_dorm' => $booking->id_dorm,
+							'id_room' => $booking->id_room,
 							'month_pay' => $date->modify('+1 month')->format('Y-m-d'),
 							'amount' => $booking->total_payment / $booking->length_of_stay,
 							'created_at' => (new DateTime())->format('Y-m-d H:i:s'),
