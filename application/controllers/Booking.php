@@ -62,7 +62,7 @@ class Booking extends CI_Controller
 			'id_customer' => $this->input->post('customer_id', TRUE),
 			'code' => date('YmdHis'),
 			'start_date' => $start_date,
-			'end_date' => (new DateTime($start_date))->modify('+3 months')->format('Y-m-d H:i:s'),
+			'end_date' => (new DateTime($start_date))->modify('+' . $length_of_stay . ' months')->format('Y-m-d H:i:s'),
 			'length_of_stay' => $length_of_stay,
 			'current_payment' => $current_payment,
 			'total_payment' => $total_payment,

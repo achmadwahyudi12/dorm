@@ -39,7 +39,7 @@
                             <th>Pelangggan</th>
                             <th>Tanggal Mulai</th>
                             <th>Tanggal Akhir</th>
-                            <th>Bayar</th>
+                            <th>Sudah Bayar</th>
                             <th>Total Bayar</th>
                             <th>Sisa Bayar</th>
                             <th>Status</th>
