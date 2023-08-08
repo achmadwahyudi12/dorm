@@ -7,6 +7,7 @@ class Dorm extends CI_Controller {
 		parent::__construct();
 		$this->load->model('auth_model');
 		$this->load->model('dorm_model');
+		$this->load->helper('rupiah');
 	}
 
 	public function index()

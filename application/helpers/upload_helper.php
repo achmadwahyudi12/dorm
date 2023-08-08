@@ -16,25 +16,23 @@ if (!function_exists('do_image_upload')) {
      * @param int $max_size Maximum allowed file size in kilobytes.
      * @return array|null Array containing 'success' (boolean) and 'error' (string) if upload failed.
      */
-    function do_image_upload($field_name, $upload_path, $allowed_types = array(), $max_size = 2048)
-    {
+    function do_image_upload($input_name, $upload_path, $allowed_types, $max_size) {
         $CI = &get_instance();
         $CI->load->library('upload');
-
+    
         $config['upload_path'] = $upload_path;
-        $config['allowed_types'] = implode('|', $allowed_types);
+        $config['allowed_types'] = $allowed_types;
         $config['max_size'] = $max_size;
         $config['encrypt_name'] = TRUE;
-
+    
         $CI->upload->initialize($config);
-
-        if (!$CI->upload->do_upload($field_name)) {
-            return array(
-                'success' => FALSE,
-                'error' => $CI->upload->display_errors()
-            );
+    
+        if (!$CI->upload->do_upload($input_name)) {
+            $error = $CI->upload->display_errors();
+            return array('status' => false, 'error' => $error);
         } else {
-            return array('success' => TRUE);
+            $upload_data = $CI->upload->data();
+            return array('status' => true, 'upload_data' => $upload_data);
         }
     }
 }

@@ -7,6 +7,7 @@ class Customer extends CI_Controller {
 		parent::__construct();
 		$this->load->model('auth_model');
 		$this->load->model('customer_model');
+		$this->load->helper('upload');
 	}
 
 	public function index()
@@ -51,6 +52,17 @@ class Customer extends CI_Controller {
 			'address' => $this->input->post('address', TRUE),
 		);
 
+        $upload_result = do_image_upload('userfile', './uploads/', 'jpeg|jpg|png', 2048);
+        if (!$upload_result['status']) {
+			$this->session->set_flashdata('customer_message_failed', $upload_result['error']);
+			redirect("customer/form");
+        } else {
+			$data_photo = array(
+				'photo' => $upload_result['upload_data']["file_name"],
+			);
+			array_push($data, $data_photo);
+		}
+
 		$result = $this->customer_model->add_customer($data);
 		if($result){
 			$this->session->set_flashdata('customer_message_success', 'Data pelanggan berhasil disimpan.');
@@ -63,6 +75,7 @@ class Customer extends CI_Controller {
 
 	public function update_customer(){
 		$customer_id = $this->input->post('id', TRUE);
+		$file = $this->input->post('userfile', TRUE);
 		$data = array(
 			'nik' => $this->input->post('nik', TRUE),
 			'name' => $this->input->post('name', TRUE),
@@ -71,6 +84,19 @@ class Customer extends CI_Controller {
 			'phone_emergency' => $this->input->post('phone_emergency', TRUE),
 			'address' => $this->input->post('address', TRUE),
 		);
+
+		if($file){
+			$upload_result = do_image_upload('userfile', './uploads/', 'jpeg|jpg|png', 2048);
+			if (!$upload_result['status']) {
+				$this->session->set_flashdata('customer_message_failed', $upload_result['error']);
+				redirect("customer/form");
+			} else {
+				$data_photo = array(
+					'photo' => $upload_result['upload_data']["file_name"],
+				);
+				array_push($data, $data_photo);
+			}
+		}
 
 		$result = $this->customer_model->update_customer($customer_id, $data);
 		if($result){

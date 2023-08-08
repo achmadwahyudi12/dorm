@@ -9,7 +9,15 @@
             </div>
         </div>
         <div class="card-body">
-            <form method="POST" action="<?= base_url(isset($customer->id) ? "customer/update_customer" : "customer/add_customer")  ?>">
+            <?php if($this->session->flashdata('customer_message_failed')): ?>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <?= $this->session->flashdata('customer_message_failed') ?>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            <?php endif ?>
+            <form method="POST" enctype="multipart/form-data" action="<?= base_url(isset($customer->id) ? "customer/update_customer" : "customer/add_customer")  ?>">
                 <div class="form-group">
                     <label for="nik">NIK</label>
                     <input type="text" class="form-control" id="nik" name="nik" value="<?= isset($customer->nik) ?  $customer->nik : "" ?>" required>
@@ -41,12 +49,14 @@
                 </div>
                 <div class="form-group">
                     <label for="address">Alamat</label>
-                    <textarea class="form-control" name="address" id="address" rows="3" required>
-                        <?= isset($customer->address) ? $customer->address : "" ?>
-                    </textarea>
+                    <input type="text" class="form-control" id="address" name="address" value="<?= isset($customer->address) ? $customer->address : "" ?>" required>
+                </div>
+                <div class="form-group">
+                    <label for="userfile">Upload KTP</label>
+                    <input type="file" class="form-control" id="userfile" name="userfile" <?= isset($customer->photo) ? "" : "required" ?> >
                 </div>
 
-                <input type="hidden" class="form-control" id="id" name="id" value="<?= isset($customer->id) ?  $customer->id : "" ?>" required>
+                <input type="hidden" class="form-control" id="id" name="id" value="<?= isset($customer->id) ?  $customer->id : "" ?>" >
                 <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" style="display: none">
                 <div class="d-flex justify-content-between align-items-center">
                     <a href="<?= base_url("customer") ?>" class="btn btn-secondary">Batal</a>

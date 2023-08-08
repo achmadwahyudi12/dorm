@@ -18,7 +18,7 @@
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                </div>
+                </div> 
             <?php endif ?>
             <?php if($this->session->flashdata('customer_message_failed')): ?>
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -34,12 +34,10 @@
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>NIK</th>
+                            <th>Photo</th>
                             <th>Nama</th>
                             <th>Jenis Kelamin</th>
                             <th>Telp.</th>
-                            <th>Telp. (darurat)</th>
-                            <th>Alamat</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -47,12 +45,10 @@
                         <?php $no=1; foreach ($list_customer as $item) : ?>
                             <tr>
                                 <td><?= $no++ ?></td>
-                                <td><?= $item['nik'] ?></td>
+                                <td><img src="<?php echo base_url('uploads/' . $item['photo']); ?>" alt="<?= $item['name'] ?>" width="50" height="50" /></td>
                                 <td><?= $item['name'] ?></td>
                                 <td><?= $item['gender'] == "L" ? "Laki - laki" : "Perempuan" ?></td>
                                 <td><?= $item['phone'] ?><Atd>
-                                <td><?= $item['phone_emergency'] ?><Atd>
-                                <td><?= $item['address'] ?></td>
                                 <td>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <a class="btn btn-sm btn-secondary btn-edit" title="ubah" href="<?= base_url("customer/form?edit=" . $item['id']) ?>" >
