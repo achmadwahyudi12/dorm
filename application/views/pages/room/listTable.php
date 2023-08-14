@@ -38,6 +38,7 @@
                             <th>Nama</th>
                             <th>Harga</th>
                             <th>Uang Muka</th>
+                            <th>Minimal Order (Bulan)</th>
                             <th>Keterangan</th>
                             <th>Aksi</th>
                         </tr>
@@ -50,6 +51,7 @@
                                 <td><?= $item['name'] ?></td>
                                 <td><?= format_rupiah($item['price']) ?><Atd>
                                 <td><?= format_rupiah($item['down_payment']) ?></td>
+                                <td><?= format_rupiah($item['minimum_order']) ?></td>
                                 <td><?= $item['description'] ?></td>
                                 <td>
                                     <div class="d-flex justify-content-between align-items-center">

@@ -37,6 +37,7 @@ class Room extends CI_Controller {
 			redirect('auth');
 		}
 
+		$dorm_id = $this->input->get('dorm');
 		$editValue = $this->input->get('edit');
 		$checkRoom = $this->room_model->get_room($editValue);
 		if ($checkRoom) {
@@ -44,6 +45,7 @@ class Room extends CI_Controller {
 		}
 
 		$data['profil'] = $this->auth_model->current_user();
+		$data['dorm_detail'] = $this->dorm_model->get_dorm($dorm_id);
 
 		$this->load->view('template/page_header', $data);
 		$this->load->view('pages/room/forms');
@@ -56,7 +58,6 @@ class Room extends CI_Controller {
 			'floor' => $this->input->post('floor', TRUE),
 			'name' => $this->input->post('name', TRUE),
 			'price' => $this->input->post('price', TRUE),
-			'down_payment' => $this->input->post('down_payment', TRUE),
 			'description' => $this->input->post('description', TRUE),
 			'created_at' => (new DateTime())->format('Y-m-d H:i:s'),
 			'updated_at' => (new DateTime())->format('Y-m-d H:i:s'),

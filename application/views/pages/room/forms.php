@@ -5,21 +5,19 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <div class="d-flex justify-content-between align-items-center">
-                <h6 class="m-0 font-weight-bold text-primary">Form Ruangan</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Form Ruangan <?= $dorm_detail->name ?></h6>
             </div>
         </div>
         <div class="card-body">
             <form method="POST" action="<?= base_url(isset($room->id) ? "room/update_room" : "room/add_room")  ?>">
                 <div class="form-group">
                     <label for="floor">Lantai</label>
-                    <input 
-                        required
-                        type="text" 
-                        class="form-control" 
-                        id="floor" 
-                        name="floor" 
-                        value="<?= isset($room->floor) ?  $room->floor : "" ?>" 
-                    />
+                    <select class="form-control" id="floor" name="floor" required>
+                        <option value="">Pilih Lantai ...</option>
+                        <?php for ($x = 1; $x <= (int) $dorm_detail->total_floors; $x++) { ?>
+                            <option value="<?= $x ?>"><?= $x ?></option>
+                        <?php } ?>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="name">Nama</label>
@@ -42,18 +40,6 @@
                         name="price" 
                         value="<?= isset($room->price) ? $room->price : 0 ?>" 
                         min="1" 
-                    />
-                </div>
-                <div class="form-group">
-                    <label for="down_payment">Uang Muka</label>
-                    <input 
-                        required
-                        type="number" 
-                        class="form-control" 
-                        id="down_payment" 
-                        name="down_payment" 
-                        value="<?= isset($room->down_payment) ? $room->down_payment : 0 ?>" 
-                        min="0" 
                     />
                 </div>
                 <div class="form-group">
