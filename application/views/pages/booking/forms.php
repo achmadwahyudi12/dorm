@@ -19,14 +19,29 @@
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="room_id">Kamar</label>
-                    <select class="form-control" id="room_id" name="room_id" required>
-                        <option value="">Pilih Kamar ...</option>
-                        <?php foreach ($list_dorm as $dorm) : ?>
-                            <option value="<?= $dorm['id'] ?>"><?= $dorm["name_dorm"] . " (Lantai-" . $dorm["floor"] . " Kamar-" . $dorm["name"] . ")" ?></option>
-                        <?php endforeach; ?>
-                    </select>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="asrama">Asrama</label>
+                            <select class="form-control" id="asrama" name="asrama" required>
+                                <option value="">Pilih Asrama ...</option>
+                                <?php foreach ($list_dorm as $dorm) : ?>
+                                    <option value="<?= $dorm['id'] ?>"><?= $dorm["name"] ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="room_id">Kamar</label>
+                            <select class="form-control" id="room_id" name="room_id" required>
+                                <option value="">Pilih Kamar ...</option>
+                                <!-- <?php foreach ($list_dorm as $dorm) : ?>
+                                    <option value="<?= $dorm['id'] ?>"><?= $dorm["name_dorm"] . " (Lantai-" . $dorm["floor"] . " Kamar-" . $dorm["name"] . ")" ?></option>
+                                <?php endforeach; ?> -->
+                            </select>
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col">
@@ -51,6 +66,7 @@
                     <input class="form-control" type="number" name="current_payment" id="current_payment" value="0" required>
                 </div>             
 
+                <input type="hidden" class="form-control" id="last_price" name="last_price" value="">
                 <input type="hidden" class="form-control" id="id" name="id" value="<?= isset($customer->id) ?  $customer->id : "" ?>" required>
                 <input type="hidden" id="csrf_token" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" style="display: none">
                 <div class="d-flex justify-content-between align-items-center">
@@ -64,11 +80,54 @@
 
 <script>
     $(document).ready(function() {
-        const current_payment_input = document.getElementById('current_payment');
         const total_amount_input = document.getElementById('total_amount');
         const length_of_stay_input = document.getElementById('length_of_stay');
+        const current_payment_input = document.getElementById('current_payment');
+        const price_input = document.getElementById('last_price');
         let total_amount;
 
+        $('#asrama').on('change', function() {
+            let selectedValue = $(this).val();
+            let selected_dorm;
+            const csrfToken = $('#csrf_token').val(); 
+
+            const dorms = <?php echo json_encode($list_dorm); ?>;
+            dorms.forEach(function(item) {
+                if(item.id == selectedValue){
+                    console.log(item);
+                    const dp = parseInt(item.down_payment);
+                    const minimum_order = parseInt(item.minimum_order);
+                    // if (parseInt(current_payment_input.value) < dp) {
+                    //     current_payment_input.value = selectedValue; // Ensure the current value is not below the new min value
+                    // }
+                    current_payment_input.min = dp; // Update the min attribute of the input element
+                    current_payment_input.value = dp;
+                    length_of_stay_input.min = minimum_order;
+                    length_of_stay_input.value = minimum_order;
+                }
+            })
+            // const selected_dorm = dorms.map(dorm => parseInt(dorm.id) === selectedValue);
+            // console.log("selectedValue", selectedValue);
+            // console.log("selected_dorm", selected_dorm);
+
+            $.ajax({
+                type: 'POST',
+                url: '<?= base_url("booking/get_rooms_available") ?>',
+                data: {
+                    'dorm_id': selectedValue,
+                    '<?= $this->security->get_csrf_token_name(); ?>': csrfToken
+                },
+                success: function(response) {
+                    const data = JSON.parse(response);
+                    $('#room_id').empty().append('<option value="">Pilih Kamar ...</option>');
+                    $.each(data, function(key, value) {
+                        $("#room_id").append($('<option></option>').attr("value", value.id).text(`Lantai-${value.floor} Kamar-${value.name}`));
+                    });
+                },
+                error: function(xhr, status, error) {
+                }
+            });
+        });
 
         $('#room_id').on('change', function() {
             let selectedValue = $(this).val();
@@ -83,16 +142,11 @@
                 },
                 success: function(response) {
                     const result = JSON.parse(response);
-                    const dp = parseInt(result.down_payment);
                     const price = parseInt(result.price);
-
-                    current_payment_input.min = dp; // Update the min attribute of the input element
-                    if (parseInt(current_payment_input.value) < dp) {
-                        current_payment_input.value = selectedValue; // Ensure the current value is not below the new min value
-                    }
-                    current_payment_input.value = dp;
+                    
                     total_amount = price;
                     total_amount_input.value = total_amount * length_of_stay_input.value;
+                    price_input.value = price;
                 },
                 error: function(xhr, status, error) {
                 }

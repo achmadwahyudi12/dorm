@@ -41,7 +41,7 @@ class Booking extends CI_Controller
 
 		$data['profil'] = $this->auth_model->current_user();
         $data['list_customer'] = $this->customer_model->get_customers();
-        $data['list_dorm'] = $this->dorm_model->get_dorms_rooms();
+        $data['list_dorm'] = $this->dorm_model->get_dorms();
 
 		$this->load->view('template/page_header', $data);
 		$this->load->view('pages/booking/forms');
@@ -52,6 +52,7 @@ class Booking extends CI_Controller
         $room_id = $this->input->post('room_id', TRUE);
         $length_of_stay = $this->input->post('length_of_stay', TRUE);
         $current_payment = $this->input->post('current_payment', TRUE);
+        $last_price = $this->input->post('last_price', TRUE);
 		$start_date = $this->input->post('start_date', TRUE);
 		$end_date = (new DateTime($start_date))->modify('+' . $length_of_stay . ' months')->format('Y-m-d H:i:s');
         $result_room = $this->room_model->get_room($room_id);
@@ -68,6 +69,7 @@ class Booking extends CI_Controller
 			'length_of_stay' => $length_of_stay,
 			'current_payment' => $current_payment,
 			'total_payment' => $total_payment,
+			'last_price' => $last_price,
 			'status' => $current_status,
 			'created_at' => (new DateTime())->format('Y-m-d H:i:s'),
 			'updated_at' => (new DateTime())->format('Y-m-d H:i:s'),
@@ -139,4 +141,13 @@ class Booking extends CI_Controller
 
 		echo json_encode($room);
 	}
+
+	public function get_rooms_available(){
+		$dorm_id = $this->input->post('dorm_id', true);
+		$rooms = $this->room_model->get_rooms_available($dorm_id);
+
+		echo json_encode($rooms);
+	}
+
+
 }
