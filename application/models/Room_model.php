@@ -16,10 +16,10 @@ class Room_model extends CI_Model
 	
 	public function get_rooms_available($dorm_id)
 	{
-		$this->db->select('bookings.id, bookings.code as booking_code, payments.*');
-        $this->db->from('bookings');
-		$this->db->where($this->_table, array('id_dorm' => $dorm_id));
-        $this->db->join('payments', 'bookings.id = payments.id_booking');
+		$this->db->select('d.id AS dorm_id, d.name AS dorm_name, d.down_payment, d.total_floors, d.minimum_order, r.*');
+		$this->db->from('dorms AS d');
+		$this->db->join('rooms AS r', 'r.id_dorm = d.id');
+		$this->db->where('r.id_dorm', $dorm_id);
 		$query = $this->db->get();
 		return $query->result_array();
 	}
