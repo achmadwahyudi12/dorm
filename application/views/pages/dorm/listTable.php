@@ -35,8 +35,9 @@
                         <tr>
                             <th>No</th>
                             <th>Nama</th>
-                            <th>Telp.</th>
-                            <th>Alamat</th>
+                            <th>Jumlah Lantai</th>
+                            <th>Uang Muka</th>
+                            <th>Minimal Order (Bulan)</th>
                             <th>Jumlah Kamar</th>
                             <th>Aksi</th>
                         </tr>
@@ -49,8 +50,9 @@
                             <tr>
                                 <td><?= $no++ ?></td>
                                 <td><?= $item['name'] ?></td>
-                                <td><?= $item['phone'] ?><Atd>
-                                <td><?= $item['address'] ?></td>
+                                <td><?= $item['total_floors'] ?><Atd>
+                                <td><?= format_rupiah($item['down_payment']) ?></td>
+                                <td><?= $item['minimum_order'] ?></td>
                                 <td><?= $item['total_rooms'] ?></td>
                                 <td>
                                     <div class="d-flex justify-content-center align-items-center">

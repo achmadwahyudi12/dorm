@@ -6,7 +6,11 @@ class Customer_model extends CI_Model
 
 	public function get_customers()
 	{
-		$query = $this->db->get($this->_table);
+		$this->db->select('*');
+		$this->db->from('customers');
+		$this->db->order_by('NAME', 'ASC');
+
+		$query = $this->db->get();
 		return $query->result_array();
 	}
 

@@ -6,7 +6,7 @@ class Dorm_model extends CI_Model
 
 	public function get_dorms()
 	{
-		$this->db->select('dorms.id, dorms.name, dorms.phone, dorms.address, COUNT(rooms.id) as total_rooms');
+		$this->db->select('dorms.*, dorms.name, dorms.phone, dorms.address, dorms.total_floors, dorms.down_payment, dorms.minimum_order, COUNT(rooms.id) as total_rooms');
 		$this->db->from('dorms');
 		$this->db->join('rooms', 'rooms.id_dorm = dorms.id', 'left');
 		$this->db->group_by('dorms.id');
@@ -59,8 +59,8 @@ class Dorm_model extends CI_Model
     public function delete_dorm($id) {
 		$this->db->where('id', $id);
         $this->db->delete($this->_table);
-		$this->db->where('id_dorm', $id);
-        $this->db->delete('rooms');
+		// $this->db->where('id_dorm', $id);
+        // $this->db->delete('rooms');
 		return $this->db->affected_rows() > 0;
     }
 }

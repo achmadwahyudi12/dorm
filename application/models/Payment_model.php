@@ -17,4 +17,9 @@ class Payment_model extends CI_Model
         $this->db->insert($this->_table, $data);
         return $this->db->insert_id();
     }
+
+	public function add_payment_per_month($data) {
+        $this->db->insert("payments_month", $data);
+        return $this->db->insert_id();
+    }
 }

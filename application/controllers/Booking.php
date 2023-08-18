@@ -41,7 +41,7 @@ class Booking extends CI_Controller
 
 		$data['profil'] = $this->auth_model->current_user();
         $data['list_customer'] = $this->customer_model->get_customers();
-        $data['list_dorm'] = $this->dorm_model->get_dorms_rooms();
+        $data['list_dorm'] = $this->dorm_model->get_dorms();
 
 		$this->load->view('template/page_header', $data);
 		$this->load->view('pages/booking/forms');
@@ -52,20 +52,25 @@ class Booking extends CI_Controller
         $room_id = $this->input->post('room_id', TRUE);
         $length_of_stay = $this->input->post('length_of_stay', TRUE);
         $current_payment = $this->input->post('current_payment', TRUE);
+        $last_price = $this->input->post('last_price', TRUE);
+		$start_date = $this->input->post('start_date', TRUE);
+		$end_date = (new DateTime($start_date))->modify('+' . $length_of_stay . ' months')->format('Y-m-d H:i:s');
         $result_room = $this->room_model->get_room($room_id);
         $total_payment = $result_room->price * $length_of_stay;
+		$current_status = $this->booking_model->get_status_booking($current_payment, $total_payment);
         
         $data = array(
             'id_dorm' => $result_room->id_dorm,
 			'id_room' => $room_id,
 			'id_customer' => $this->input->post('customer_id', TRUE),
 			'code' => date('YmdHis'),
-			'start_date' => $this->input->post('start_date', TRUE),
-			'end_date' => (new DateTime('2023-07-25 12:30:00'))->modify('-3 months')->format('Y-m-d H:i:s'),
+			'start_date' => $start_date,
+			'end_date' => $end_date,
 			'length_of_stay' => $length_of_stay,
 			'current_payment' => $current_payment,
 			'total_payment' => $total_payment,
-			'status' => $this->booking_model->get_status_booking($current_payment, $total_payment),
+			'last_price' => $last_price,
+			'status' => $current_status,
 			'created_at' => (new DateTime())->format('Y-m-d H:i:s'),
 			'updated_at' => (new DateTime())->format('Y-m-d H:i:s'),
 			'created_by' => $this->session->userdata('user_id'),
@@ -86,6 +91,29 @@ class Booking extends CI_Controller
 					'updated_by' => $this->session->userdata('user_id'),
 				);
 				$this->payment_model->add_payment($data_payment);
+
+				// save payment data per month when the order status is paid
+				if ($current_status == 'paid') {
+					$start_date = new DateTime($start_date);
+					$end_date = new DateTime($end_date);
+
+					$interval = DateInterval::createFromDateString('1 month');
+					$period = new DatePeriod($start_date, $interval, $end_date);
+
+					foreach ($period as $date) {
+						$data_payment_per_month = array(
+							'id_booking' => $result,
+							'id_dorm' => $result_room->id_dorm,
+							'id_room' => $room_id,
+							'month_pay' => $date->format('Y-m-d'),
+							'amount' => $total_payment / $length_of_stay,
+							'created_at' => (new DateTime())->format('Y-m-d H:i:s'),
+							'created_by' => $this->session->userdata('user_id'),
+						);
+						
+						$this->payment_model->add_payment_per_month($data_payment_per_month);
+					}
+				}
 			}
 			$this->session->set_flashdata('booking_message_success', 'Data booking berhasil disimpan.');
 			redirect("booking");
@@ -113,4 +141,13 @@ class Booking extends CI_Controller
 
 		echo json_encode($room);
 	}
+
+	public function get_rooms_available(){
+		$dorm_id = $this->input->post('dorm_id', true);
+		$rooms = $this->room_model->get_rooms_available($dorm_id);
+
+		echo json_encode($rooms);
+	}
+
+
 }

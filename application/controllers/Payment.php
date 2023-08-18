@@ -45,7 +45,7 @@ class Payment extends CI_Controller
 
 		if ($booking->id) {
 			$data_payment = array(
-				'id_booking' => $booking_code,
+				'id_booking' => $booking->id,
 				'code' => "TRX-" . date('YmdHis'),
 				'amount' => $amount,
 				'description' => $description,
@@ -67,6 +67,29 @@ class Payment extends CI_Controller
 					'updated_by' => $this->session->userdata('user_id'),
 				);
 				$updated = $this->booking_model->update_booking($booking->id,$data_booking);
+
+				// save payment data per month when the order status is paid
+				if ($current_status == 'paid') {
+					$start_date = new DateTime($booking->start_date);
+					$end_date = new DateTime($booking->end_date);
+
+					$interval = DateInterval::createFromDateString('1 month');
+					$period = new DatePeriod($start_date, $interval, $end_date);
+
+					foreach ($period as $date) {
+						$data_payment_per_month = array(
+							'id_booking' => $booking->id,
+							'id_dorm' => $booking->id_dorm,
+							'id_room' => $booking->id_room,
+							'month_pay' => $date->modify('+1 month')->format('Y-m-d'),
+							'amount' => $booking->total_payment / $booking->length_of_stay,
+							'created_at' => (new DateTime())->format('Y-m-d H:i:s'),
+							'created_by' => $this->session->userdata('user_id'),
+						);
+						
+						$this->payment_model->add_payment_per_month($data_payment_per_month);
+					}
+				}
 
 				$this->session->set_flashdata('payment_message_success', 'Data transaksi berhasil disimpan.');
 				redirect("payment");
