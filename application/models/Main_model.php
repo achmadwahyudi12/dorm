@@ -56,8 +56,8 @@ class Main_model extends CI_Model
         return $query->row();
     }
 
-	public function get_total_room_booked(){
-        $this->db->select_sum('total_room_booked', 'total');
+	public function get_total_room_available(){
+        $this->db->select_sum('total_room_available', 'total');
 		$this->db->from('dorm_summary_room');
 		$query = $this->db->get();
         return $query->row();

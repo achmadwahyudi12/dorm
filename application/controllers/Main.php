@@ -34,7 +34,7 @@ class Main extends CI_Controller {
 		// get total room used
 		$data['total_room_used'] = $this->main_model->get_total_room_used()->total;
 		// get total room booked
-		$data['total_room_booked'] = $this->main_model->get_total_room_booked()->total;
+		$data['total_room_available'] = $this->main_model->get_total_room_available()->total;
 
 		// var_dump($data['total_earnings']);die;
 
