@@ -62,8 +62,12 @@
                     <input class="form-control" type="number" name="total_amount" id="total_amount" value="0" required disabled>
                 </div>             
                 <div class="form-group">
-                    <label for="current_payment">Bayar / Uang Muka</label>
-                    <input class="form-control" type="number" name="current_payment" id="current_payment" value="0" required>
+                    <label for="discount">Bayar / Uang Muka</label>
+                    <input class="form-control" type="number" name="discount" id="discount" value="0" min="0" required>
+                </div>             
+                <div class="form-group">
+                    <label for="diskon">Diskon</label>
+                    <input class="form-control" type="number" name="diskon" id="diskon" value="0">
                 </div>             
 
                 <input type="hidden" class="form-control" id="last_price" name="last_price" value="">

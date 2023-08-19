@@ -54,9 +54,10 @@ class Booking extends CI_Controller
         $current_payment = $this->input->post('current_payment', TRUE);
         $last_price = $this->input->post('last_price', TRUE);
 		$start_date = $this->input->post('start_date', TRUE);
+		$discount = $this->input->post('discount', TRUE);
 		$end_date = (new DateTime($start_date))->modify('+' . $length_of_stay . ' months')->format('Y-m-d H:i:s');
         $result_room = $this->room_model->get_room($room_id);
-        $total_payment = $result_room->price * $length_of_stay;
+        $total_payment = $result_room->price * $length_of_stay - $discount;
 		$current_status = $this->booking_model->get_status_booking($current_payment, $total_payment);
         
         $data = array(
@@ -70,6 +71,7 @@ class Booking extends CI_Controller
 			'current_payment' => $current_payment,
 			'total_payment' => $total_payment,
 			'last_price' => $last_price,
+			'discount' => $last_price,
 			'status' => $current_status,
 			'created_at' => (new DateTime())->format('Y-m-d H:i:s'),
 			'updated_at' => (new DateTime())->format('Y-m-d H:i:s'),
