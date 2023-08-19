@@ -53,14 +53,12 @@ class Customer extends CI_Controller {
 		);
 
         $upload_result = do_image_upload('userfile', './uploads/', 'jpeg|jpg|png', 2048);
-        if (!$upload_result['status']) {
+        
+		if (!$upload_result['status']) {
 			$this->session->set_flashdata('customer_message_failed', $upload_result['error']);
 			redirect("customer/form");
         } else {
-			$data_photo = array(
-				'photo' => $upload_result['upload_data']["file_name"],
-			);
-			array_push($data, $data_photo);
+			$data['photo'] = $upload_result['upload_data']["file_name"];
 		}
 
 		$result = $this->customer_model->add_customer($data);
@@ -91,10 +89,7 @@ class Customer extends CI_Controller {
 				$this->session->set_flashdata('customer_message_failed', $upload_result['error']);
 				redirect("customer/form");
 			} else {
-				$data_photo = array(
-					'photo' => $upload_result['upload_data']["file_name"],
-				);
-				array_push($data, $data_photo);
+				$data['photo'] = $upload_result['upload_data']["file_name"];
 			}
 		}
 
