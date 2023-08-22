@@ -30,7 +30,7 @@
             <?php endif ?>
 
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="dataTablePayment" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>Kode Transaksi</th>
@@ -97,5 +97,17 @@
             const inputElement = document.getElementById("deleteId");
             inputElement.value = $(this).data('id');
         });
-    })
+    });
+
+    $(document).ready(function() {
+        $('#dataTablePayment').DataTable({
+            columnDefs: [
+                {
+                    targets: '_all', // Apply to all columns
+                    orderable: false, // Disable sorting
+                }
+            ],
+            order: [[4, 'desc']]
+        });
+    });
 </script>
