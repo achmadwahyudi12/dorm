@@ -47,6 +47,9 @@ class Dorm extends CI_Controller {
 			'name' => $this->input->post('name', TRUE),
 			'phone' => $this->input->post('phone', TRUE),
 			'address' => $this->input->post('address', TRUE),
+			'total_floors' => $this->input->post('total_floors', TRUE),
+			'minimum_order' => $this->input->post('minimum_order', TRUE),
+			'down_payment' => $this->input->post('down_payment', TRUE),
 		);
 
 		$result = $this->dorm_model->add_dorm($data);

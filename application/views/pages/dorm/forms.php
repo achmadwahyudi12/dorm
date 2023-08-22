@@ -20,9 +20,19 @@
                 </div>
                 <div class="form-group">
                     <label for="address">Alamat</label>
-                    <textarea class="form-control" name="address" id="address" rows="3" required>
-                        <?= isset($dorm->address) ? $dorm->address : "" ?>
-                    </textarea>
+                    <input type="text" class="form-control" id="address" name="address" value="<?= isset($dorm->address) ? $dorm->address : "" ?>" >
+                </div>
+                <div class="form-group">
+                    <label for="total_floors">Jumlah Lantai</label>
+                    <input type="number" class="form-control" id="total_floors" name="total_floors" value="<?= isset($dorm->total_floors) ? $dorm->total_floors : "" ?>" >
+                </div>
+                <div class="form-group">
+                    <label for="minimum_order">Minimal Order (Bulan)</label>
+                    <input type="number" class="form-control" id="minimum_order" name="minimum_order" value="<?= isset($dorm->minimum_order) ? $dorm->minimum_order : "" ?>" >
+                </div>
+                <div class="form-group">
+                    <label for="down_payment">Uang Muka</label>
+                    <input type="number" class="form-control" id="down_payment" name="down_payment" value="<?= isset($dorm->down_payment) ? $dorm->down_payment : "" ?>" >
                 </div>
 
                 <input type="hidden" class="form-control" id="id" name="id" value="<?= isset($dorm->id) ?  $dorm->id : "" ?>" required>
