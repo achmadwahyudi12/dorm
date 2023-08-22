@@ -30,7 +30,7 @@
             <?php endif ?>
 
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="dataTableBooking" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>Kode</th>
@@ -76,10 +76,12 @@
                                  </td>
                                 <td><?= $item['created_at'] ?></td>
                                 <td>
-                                    <a class="btn btn-sm btn-danger btn-delete ml-2" title="hapus" href="#" data-toggle="modal" data-target="#deleteCustomerModal" data-id="<?= $item['id'] ?>">
-                                        <span class="icon text-white-50">
-                                            <i class="fas fa-fw fa-trash-alt"></i>
-                                        </span>    
+                                    <a class="btn btn-sm btn-warning btn-delete ml-2" title="hapus" href="#" data-toggle="modal" data-target="#deleteCustomerModal" data-id="<?= $item['id'] ?>">
+                                        <div class="d-inline-flex align-items-center">
+                                            <span class="icon text-white-50">
+                                                <i class="fas fa-fw fa-print"></i> Cetak
+                                            </span>    
+                                        </div>    
                                     </a>
                                 </td>
                             </tr>
@@ -94,7 +96,7 @@
 <!-- /.container-fluid -->
 
 <!-- Modal Confirmation Delete -->
-<div id="deleteCustomerModal" class="modal fade">
+<!-- <div id="deleteCustomerModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
             <form action="<?= base_url("booking/delete_booking") ?>" method="post">
@@ -124,4 +126,18 @@
             inputElement.value = $(this).data('id');
         });
     })
+</script> -->
+
+<script>
+    $(document).ready(function() {
+        $('#dataTableBooking').DataTable({
+            columnDefs: [
+                {
+                    targets: '_all', // Apply to all columns
+                    orderable: false, // Disable sorting
+                }
+            ],
+            order: [[0, 'desc']]
+        });
+        });
 </script>
