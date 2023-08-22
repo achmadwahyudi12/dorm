@@ -42,6 +42,7 @@
                             <th>Harga Terakhir</th>
                             <th>Sudah Bayar</th>
                             <th>Total Bayar</th>
+                            <th>Diskon</th>
                             <th>Sisa Bayar</th>
                             <th>Status</th>
                             <th>Tanggal Pemesanan</th>
@@ -60,7 +61,8 @@
                                 <td><?= format_rupiah($item['last_price']) ?></td>
                                 <td><?= format_rupiah($item['current_payment']) ?></td>
                                 <td><?= format_rupiah($item['total_payment']) ?></td>
-                                <td><?= format_rupiah(($item['total_payment'] - $item['current_payment'])) ?></td>
+                                <td><?= format_rupiah($item['discount']) ?></td>
+                                <td><?= format_rupiah(($item['total_payment'] - $item['current_payment'] - $item['discount'])) ?></td>
                                 <td>
                                     <?php if($item['status'] == 'paid'){ ?> 
                                         <div class="badge p-2" style="background-color:#2ecc71;color:white;"><?= $item['status'] ?></div>

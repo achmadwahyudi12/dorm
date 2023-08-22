@@ -53,24 +53,34 @@
                     <div class="col">
                         <div class="form-group">
                             <label for="length_of_stay">Lama Tinggal (bulan)</label>
-                            <input class="form-control" type="number" name="length_of_stay" id="length_of_stay" min="1" value="1" required>
+                            <input class="form-control" type="number" name="length_of_stay" id="length_of_stay" value="1" required>
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="last_price">Harga per kamar</label>
+                            <input class="form-control" type="number" name="last_price" id="last_price" value="0"  disabled>
+                        </div> 
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="total_amount">Total bayar</label>
+                            <input class="form-control" type="number" name="total_amount" id="total_amount" value="0" disabled>
+                        </div> 
+                    </div>
+                </div>            
                 <div class="form-group">
-                    <label for="total_amount">Total bayar</label>
-                    <input class="form-control" type="number" name="total_amount" id="total_amount" value="0" required disabled>
+                    <label for="current_payment">Bayar / Uang Muka</label>
+                    <input class="form-control" type="number" name="current_payment" id="current_payment" value="0" required>
                 </div>             
                 <div class="form-group">
-                    <label for="discount">Bayar / Uang Muka</label>
-                    <input class="form-control" type="number" name="discount" id="discount" value="0" min="0" required>
-                </div>             
-                <div class="form-group">
-                    <label for="diskon">Diskon</label>
-                    <input class="form-control" type="number" name="diskon" id="diskon" value="0">
+                    <label for="discount">Diskon</label>
+                    <input class="form-control" type="number" name="discount" id="discount" value="0">
                 </div>             
 
-                <input type="hidden" class="form-control" id="last_price" name="last_price" value="">
+                <!-- <input type="hidden" class="form-control" id="last_price" name="last_price" value=""> -->
                 <input type="hidden" class="form-control" id="id" name="id" value="<?= isset($customer->id) ?  $customer->id : "" ?>" required>
                 <input type="hidden" id="csrf_token" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" style="display: none">
                 <div class="d-flex justify-content-between align-items-center">
@@ -98,12 +108,9 @@
             const dorms = <?php echo json_encode($list_dorm); ?>;
             dorms.forEach(function(item) {
                 if(item.id == selectedValue){
-                    console.log(item);
                     const dp = parseInt(item.down_payment);
                     const minimum_order = parseInt(item.minimum_order);
-                    // if (parseInt(current_payment_input.value) < dp) {
-                    //     current_payment_input.value = selectedValue; // Ensure the current value is not below the new min value
-                    // }
+
                     current_payment_input.min = dp; // Update the min attribute of the input element
                     current_payment_input.value = dp;
                     length_of_stay_input.min = minimum_order;

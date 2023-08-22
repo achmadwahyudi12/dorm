@@ -11,6 +11,7 @@ class Booking_model extends CI_Model
 		$this->db->join('dorms', 'bookings.id_dorm = dorms.id');
 		$this->db->join('customers', 'bookings.id_customer = customers.id');
 		$this->db->join('rooms', 'bookings.id_room = rooms.id');
+		$this->db->order_by('bookings.id', 'DESC');
 
 		$query = $this->db->get();
 		return $query->result_array();
