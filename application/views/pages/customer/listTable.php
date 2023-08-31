@@ -52,14 +52,10 @@
                                 <td>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <a class="btn btn-sm btn-secondary btn-edit" title="ubah" href="<?= base_url("customer/form?edit=" . $item['id']) ?>" >
-                                            <span class="icon text-white-50">
-                                                <i class="fas fa-fw fa-edit"></i>
-                                            </span>    
+                                            Ubah 
                                         </a>
                                         <a class="btn btn-sm btn-danger btn-delete ml-2" title="hapus" href="#" data-toggle="modal" data-target="#deleteCustomerModal" data-id="<?= $item['id'] ?>">
-                                            <span class="icon text-white-50">
-                                                <i class="fas fa-fw fa-trash-alt"></i>
-                                            </span>    
+                                            Hapus   
                                         </a>
                                     </div>
                                 </td>
