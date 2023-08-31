@@ -57,19 +57,13 @@
                                 <td>
                                     <div class="d-flex justify-content-center align-items-center">
                                         <a class="btn btn-sm btn-warning btn-edit" title="detail asrama" href="<?= base_url("room?dorm=" . $item['id']) ?>" >
-                                            <span class="icon text-white-50">
-                                                <i class="fas fa-fw fa-info-circle"></i>
-                                            </span>    
+                                            Detail   
                                         </a>
                                         <a class="btn btn-sm btn-secondary ml-2 btn-edit" title="ubah" href="<?= base_url("dorm/form?edit=" . $item['id']) ?>" >
-                                            <span class="icon text-white-50">
-                                                <i class="fas fa-fw fa-edit"></i>
-                                            </span>    
+                                            Ubah    
                                         </a>
                                         <a class="btn btn-sm btn-danger ml-2 btn-delete" title="hapus" href="#" data-toggle="modal" data-target="#deleteDormModal" data-id="<?= $item['id'] ?>">
-                                            <span class="icon text-white-50">
-                                                <i class="fas fa-fw fa-trash-alt"></i>
-                                            </span>    
+                                            Hapus   
                                         </a>
                                     </div>
                                 </td>
