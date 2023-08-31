@@ -76,7 +76,7 @@
                                  </td>
                                 <td><?= $item['created_at'] ?></td>
                                 <td>
-                                    <a class="btn btn-sm btn-warning btn-delete ml-2" title="hapus" href="#" data-toggle="modal" data-target="#deleteCustomerModal" data-id="<?= $item['id'] ?>">
+                                    <a class="btn btn-sm btn-warning btn-delete ml-2" title="cetak" href="<?= base_url("booking/print_invoice_booking") ?>">
                                         <div class="d-inline-flex align-items-center">
                                             <span class="icon text-white-50">
                                                 <i class="fas fa-fw fa-print"></i> Cetak

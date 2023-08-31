@@ -152,5 +152,16 @@ class Booking extends CI_Controller
 		echo json_encode($rooms);
 	}
 
+	public function print_invoice_booking(){
+		$this->load->helper('pdf');
+
+		$content = '<h1>Hello, PDF!</h1><p>This is a sample PDF content.</p>';
+		$filename = 'sample_pdf';
+		$size = 'A4';
+		$orientation = 'portrait';
+
+		generate_pdf($content, $filename, $size, $orientation);
+	}
+
 
 }
