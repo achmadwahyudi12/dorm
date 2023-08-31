@@ -37,8 +37,6 @@
                             <th>Lantai</th>
                             <th>Nama</th>
                             <th>Harga</th>
-                            <th>Uang Muka</th>
-                            <th>Minimal Order (Bulan)</th>
                             <th>Keterangan</th>
                             <th>Aksi</th>
                         </tr>
@@ -49,21 +47,15 @@
                                 <td><?= $no++ ?></td>
                                 <td><?= $item['floor'] ?></td>
                                 <td><?= $item['name'] ?></td>
-                                <td><?= format_rupiah($item['price']) ?><Atd>
-                                <td><?= format_rupiah($item['down_payment']) ?></td>
-                                <td><?= format_rupiah($item['minimum_order']) ?></td>
+                                <td><?= format_rupiah($item['price']) ?></td>
                                 <td><?= $item['description'] ?></td>
                                 <td>
-                                    <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-inline-flex align-items-center">
                                         <a class="btn btn-sm btn-secondary btn-edit" title="ubah" href="<?= base_url("room/form?dorm=" . $dorm->id . "&edit=" . $item['id']) ?>" >
-                                            <span class="icon text-white-50">
-                                                <i class="fas fa-fw fa-edit"></i>
-                                            </span>    
+                                            Ubah
                                         </a>
                                         <a class="btn btn-sm btn-danger btn-delete ml-2" title="hapus" href="#" data-toggle="modal" data-target="#deleteRoomModal" data-id="<?= $item['id'] ?>" data-dorm="<?= $dorm->id ?>">
-                                            <span class="icon text-white-50">
-                                                <i class="fas fa-fw fa-trash-alt"></i>
-                                            </span>    
+                                            Hapus
                                         </a>
                                     </div>
                                 </td>
